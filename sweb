@@ -12,7 +12,7 @@ echo '3.修改网页密码'
 
 while :; do echo
 	read -p "请选择你要的功能：" choice
-	if [[ ! $choice =~ ^[1-2]$ ]]; then
+	if [[ ! $choice =~ ^[1-3]$ ]]; then
 		echo "输入错误! 请输入正确的数字!"
 	else
 		break	
@@ -26,6 +26,7 @@ if [[ ${choice} == 1 ]];then
     screen -dmS SWEB python CGIHTTPServer.py
     service caddy start
     /etc/init.d/shadowsocks start
+    service v2ray start
     iptables -I INPUT -p tcp --dport 8000 -j DROP
     iptables -I INPUT -s 127.0.0.1 -p tcp --dport 8000 -j ACCEPT
     iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
@@ -38,6 +39,7 @@ if [[ ${choice} == 2 ]];then
     fi
     service caddy stop
     /etc/init.d/shadowsocks stop
+    service v2ray stop
 fi
 
 if [[ ${choice} == 3 ]];then

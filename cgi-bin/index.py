@@ -10,7 +10,6 @@ html = '''
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SWEB管理面板 - 首页</title>
-
 <!-- Bootstrap -->
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css">
 
@@ -32,19 +31,25 @@ html = '''
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.py">服务信息<span class="sr-only">(current)</span></a></li>
-        <li><a href="setpage.py">服务器设置</a></li>
+        <li>
+              <a href="#"  data-toggle="dropdown" >SSR<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+        <li class="active"><a href="index.py">服务器信息<span class="sr-only">(current)</span></a></li>
+        <li><a href="setpage.py">服务设置</a></li>
         <li><a href="log.py">运行日志</a></li>
+        <li role="separator" class="divider"></li>
+            <li><a href="server.py?action=stop">停止SSR服务器</a> </li>
+            <li><a href="server.py?action=start">启动SSR服务器</a> </li>
+            <li><a href="server.py?action=restart">重启SSR服务器</a> </li>
+              </ul>
+            </li>
+            <li><a href="v2ray.py">V2ray</a></li>
         <li><a href="app.py">软件下载</a></li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
         <li> </li>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">菜单 <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="server.py?action=stop">停止SSR服务器</a> </li>
-            <li><a href="server.py?action=start">启动SSR服务器</a> </li>
-            <li><a href="server.py?action=restart">重启SSR服务器</a> </li>
-            <li role="separator" class="divider"></li>
             <li><a href="https://github.com/FunctionClub/SWEB">关于</a> </li>
             <li><a href="support.py">支持赞助</a> </li>
           </ul>
@@ -102,7 +107,7 @@ html = '''
 				SSR链接:<br>
 				<textarea class="input-xlarge trololo" id="textarea" rows="3" style="background-color: rgb(255, 255, 255); color: rgb(85, 85, 85); padding: 4px; border: 1px solid rgb(204, 204, 204); font-size: 16px; margin: 0px; width: 100%%; height: 50%%;">%s</textarea><br>
 				
-				二维码：<img src="http://qr.liantu.com/api.php?&w=150?&text=%s"/>
+				二维码：<div id="qrcode" style="height: 200px; width: 200px; display: block;"/>
 			</div>
 		</div>
 	</div>
@@ -126,6 +131,15 @@ html = '''
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="/js/jquery.qrcode.min.js"></script>
+<script>
+function SupportCanvas() {return !!document.createElement('canvas').getContext;}
+$('#qrcode').qrcode({
+	render: SupportCanvas()?"canvas":"table",
+	text: '%s',
+	width: 200,
+	height: 200});
+</script>
 </body>
 </html>
 '''
